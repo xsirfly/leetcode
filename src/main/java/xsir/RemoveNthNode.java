@@ -6,16 +6,6 @@ package xsir;
  */
 public class RemoveNthNode {
 
-    public static class ListNode {
-
-        int val;
-        ListNode next;
-
-        public ListNode(int x) {
-            val = x;
-        }
-    }
-
     public ListNode removeNthFromEnd(ListNode head, int n) {
         if (head == null) {
             return null;
