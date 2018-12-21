@@ -1,7 +1,6 @@
 package xsir;
 
-import java.util.AbstractMap;
-import java.util.Map;
+import java.util.Random;
 import java.util.Stack;
 
 /**
