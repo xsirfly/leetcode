@@ -10,12 +10,6 @@ public class Pow {
         if (n == 0) {
             return 1;
         }
-        if (n == 1) {
-            return x;
-        }
-        if (n == -1) {
-            return 1 / x;
-        }
         long absn = Math.abs((long)n);
         double res = 1.0D, tmpres;
         int addon, times;
