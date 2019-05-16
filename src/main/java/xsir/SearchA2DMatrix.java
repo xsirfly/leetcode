@@ -7,7 +7,7 @@ package xsir;
 public class SearchA2DMatrix {
 
     public static boolean searchMatrix(int[][] matrix, int target) {
-        if (matrix == null || matrix.length == 0) {
+        if (matrix == null || matrix.length == 0 || matrix[0].length == 0) {
             return false;
         }
         int start = 0, end = matrix.length - 1, mid = 0;
@@ -31,6 +31,9 @@ public class SearchA2DMatrix {
         end = matrix[0].length - 1;
         while (start <= end) {
             mid = (start + end) >> 1;
+            if (start == mid && matrix[targetRow][start] != target) {
+                break;
+            }
             if (matrix[targetRow][mid] == target) {
                 return true;
             } else if (matrix[targetRow][mid] > target) {
@@ -38,11 +41,8 @@ public class SearchA2DMatrix {
             } else {
                 start = mid;
             }
-            if (end - start <= 1) {
-                return matrix[targetRow][end] == target;
-            }
         }
-        return false;
+        return matrix[targetRow][end] == target;
     }
 
     public static void  main(String[] args){
