@@ -15,21 +15,28 @@ public class WordBreak {
         if (s == null || s.length() == 0 || wordDict == null) {
             return false;
         }
-        return canSegmenter(s, 0, 0, new HashSet<>(wordDict));
-    }
-
-    private static boolean canSegmenter(String s, int start, int cur, Set<String> dict) {
-        if (cur == s.length() - 1) {
-            return dict.contains(s.substring(start, cur + 1));
+        Set<String> dict = new HashSet<>(wordDict);
+        boolean[] mem = new boolean[s.length()];
+        for (int i = 0; i < s.length(); i++) {
+            for (int j = 0; j <= i; j++) {
+                if (j > 0) {
+                    if (mem[j - 1] && dict.contains(s.substring(j, i + 1))) {
+                        mem[i] = true;
+                        break;
+                    }
+                } else {
+                    if (dict.contains(s.substring(j, i + 1))) {
+                        mem[i] = true;
+                        break;
+                    }
+                }
+            }
         }
-        if (dict.contains(s.substring(start, cur + 1))) {
-            return canSegmenter(s, cur + 1, cur + 1, dict) || canSegmenter(s, start, cur + 1, dict);
-        }
-        return canSegmenter(s, start, cur + 1, dict);
+        return mem[s.length() - 1];
     }
 
     public static void  main(String[] args){
-        System.out.println(wordBreak("a", Arrays.asList("a", "pen")));
+        System.out.println(wordBreak("catsandog", Arrays.asList("cats", "dog", "sand", "and", "cat")));
     }
 
 }
