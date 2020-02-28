@@ -6,22 +6,29 @@ import java.util.List;
 public class ExpressionAddOperators {
     public static List<String> addOperators(String num, int target) {
         List<String> result = new ArrayList<>();
-        if (num == null || num.isEmpty()) {
-            return result;
-        }
-        for (int i = 1; i < num.length(); i++) {
-
-        }
-        return null;
+        op(num, target, "", 0, 0, result);
+        return result;
     }
 
-    private static void add(String prefix, int preToken, String num, int target, List<String> res) {
-        if (num == null || num.isEmpty()) {
-            if (target == 0) res.add(prefix);
+    private static void op(String num, int target, String prefix, long diff, long curNum, List<String> res) {
+        if (num.isEmpty() && curNum == target) {
+            res.add(prefix);
             return;
         }
-        for (int i = 0; i < num.length(); i++) {
-
+        for (int i = 1; i <= num.length(); i++) {
+            String cur = num.substring(0, i);
+            if (cur.length() > 1 && cur.charAt(0) == '0') {
+                break;
+            }
+            String next = num.substring(i);
+            long newNum = Long.valueOf(cur);
+            if (prefix.length() > 0) {
+                op(next, target, prefix + "+" + cur, newNum, curNum + newNum, res);
+                op(next, target, prefix + "-" + cur, 0 - newNum, curNum - newNum, res);
+                op(next, target, prefix + "*" + cur, diff * newNum, (curNum - diff) + (diff * newNum), res);
+            } else {
+                op(next, target, cur, newNum, newNum, res);
+            }
         }
     }
 
